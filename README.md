@@ -30,3 +30,5 @@ The whole process of deploying this web-app consists of:
     - Upload both `build/analytics/js` and `build/analytics/styles` to the host, but only those directories, not their parent; in the host their path should be, for our example, `analytics/js` and `analytics/styles`
     - Upload the whole `src/client/app/db` directory; in the host the path should be, for our example, `analytics/db`
     - Upload the whole `src/client/app/data` directory; in the host the path should be, for our example, `analytics/data`
+
+This project's code structure follows the [Hottowel SPA Template](https://github.com/johnpapa/generator-hottowel) for Angular.JS. The most relevant technologies are [Leaflet.JS](http://leafletjs.com/), for map manipulation, and [Turf.JS](http://turfjs.org/), for most of the spatial analysis needed.
