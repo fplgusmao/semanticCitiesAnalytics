@@ -1,0 +1,27 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{vm.title}}</h3>
+</div>
+<div class="modal-body info-modal">
+    <section>
+        <p><span class="description">{{vm.data.phaseType.description}}</span>: {{vm.data.phaseType.value}}</p>
+
+        <p ng-show="vm.data.phaseTitle.value"><span class="description">{{vm.data.phaseTitle.description}}</span>: {{vm.data.phaseTitle.value}}</p>
+        <p ng-hide="vm.data.phaseTitle.value"><span class="description">{{vm.data.phaseTitle.description}}</span></p>
+    </section>
+    <hr>
+    <section>
+        <p>
+            <span class="description">{{vm.data.phaseContent.description}}:</span>
+        </p>
+        <p ng-repeat="content in vm.data.phaseContent.values">
+            {{content}}
+        </p>
+        <p ng-hide="vm.data.phaseContent.values.length > 0">
+            (No content found)
+        </p>
+    </section>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default btn-block"
+            type="button" ng-click="vm.close()">Close</button>
+</div>

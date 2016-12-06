@@ -1,0 +1,18 @@
+<div class="results-screen survey-information-results">
+    <div class="info" ng-hide="vm.hasDataToAnalyze()">
+        <p class="info-text">The selected phases provide no relevant data.</p>
+    </div>
+    <div class="info stretched" ng-show="vm.hasDataToAnalyze()">
+        <div>
+            <h4>Participants' emails ({{vm.submittedEmails.length}} submitted)</h4>
+            <ul ng-show="vm.hasDataToAnalyze()"
+                class="list-unstyled">
+                <li ng-repeat="email in vm.submittedEmails track by $index">
+                    {{email}}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<analysis-bar></analysis-bar>

@@ -1,0 +1,55 @@
+<div class="filter-bar">
+    <div class="search-section">
+        <div class="input-group search-bar">
+            <span class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></span>
+            <input type="text" class="form-control" placeholder="Search for filter"
+                   uib-typeahead="filterObj as filterObj.name for filterObj in vm.availableFilters | filter:{name:$viewValue}" ng-model="vm.selectedFilter.config">
+            <span class="input-group-btn">
+                <button class="btn btn-primary"
+                        ng-click="vm.addFilter()">Add Filter</button>
+            </span>
+        </div>
+    </div>
+    <div class="filters-section">
+        <div ng-repeat="filterGroup in vm.filterGroups track by $index"
+             ng-init="groupIndex = $index; lastGroup = $last; firstGroup = $first;"
+             class="filter-group">
+            <p class="label-between" ng-show="$first">Participations which respect...</p>
+            <p class="label-between" ng-hide="$first">OR which respect...</p>
+            <div ng-repeat="activeFilter in filterGroup">
+                <p class="label-between" ng-hide="$first">... AND ...</p>
+                <sca-filter filter-config="activeFilter.config"
+                            target-phase="activeFilter.targetPhase"
+                            target-phase-number="activeFilter.targetPhaseNumber"
+                            target-question-number="activeFilter.targetQuestionNumber"
+                            parameters-values="activeFilter.parametersValues">
+                    <filter-actions>
+                        <button class="btn btn-default filter-action"
+                                ng-click="vm.moveFilterUp(groupIndex, $index)">
+                            <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                        </button>
+                        <button class="btn btn-default filter-action"
+                                ng-click="vm.moveFilterDown(groupIndex, $index)">
+                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                        </button>
+                        <button class="btn btn-default filter-action pull-right"
+                                ng-click="vm.deleteFilter(groupIndex, $index)">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </button>
+                    </filter-actions>
+                </sca-filter>
+            </div>
+            <p ng-hide="filterGroup.length">Empty filter group</p>
+        </div>
+        <button class="btn btn-default btn-block"
+                ng-click="vm.addFilterGroup()"
+                ng-show="vm.filterGroups.length">Add filter group</button>
+    </div>
+    <div class="actions-section">
+        <button class="btn btn-default" ng-click="vm.deleteAllFilters()">Clear Filters</button>
+        <button class="btn btn-primary" ng-click="vm.applyFilters()">Apply Filters</button>
+    </div>
+</div>
+<div class="results-section">
+    <div ui-view></div>
+</div>

@@ -1,0 +1,546 @@
+@import "scaApp-properties.less";
+
+@filter-bar-width : 23%;
+
+@rest-of-screen-width : 100% - @filter-bar-width;
+
+@results-screen-width : @rest-of-screen-width;
+@results-screen-height : 72%;
+
+@analysis-bar-width : @results-screen-width;
+@analysis-bar-height : 100% - @results-screen-height;
+
+.filter-bar {
+    position: absolute;
+
+    left: 0;
+    top: 0;
+    width : @filter-bar-width;
+    height: 100%;
+
+    background-color: @sca-grey-color;
+    border: solid 5px @sca-grey-color;
+
+    @search-section-height : 10%;
+    @actions-section-height : 13%;
+    @filters-section-height : 100% - @search-section-height - @actions-section-height;
+
+    .search-section {
+        position: relative;
+
+        top: 0;
+        height: @search-section-height;
+        width: 100%;
+
+        padding: 10px 15px 10px;
+
+        background-color: @sca-light-color;
+
+        .search-bar {
+            top: 15%;
+            //vertical-align: middle;
+        }
+    }
+
+    .filters-section {
+        position: relative;
+
+        height: @filters-section-height;
+        width: 100%;
+
+        padding: 15px 10px;
+        overflow-y: auto;
+
+        background-color: @sca-grey-color;
+        //box-shadow: inset 0px 0px 5px 0px @sca-shadow-color;
+
+        .filter-group {
+            position: relative;
+
+            margin-bottom: 15px;
+            padding: 10px 10px;
+
+            border-radius: 3px;
+
+            background-color: @sca-shadow-color;
+
+            .label-between {
+                text-align: center;
+                margin-bottom: 5px;
+
+                font-size: @medium-text;
+                font-weight: @bold-text;
+
+                color: @sca-light-color;
+            }
+        }
+    }
+
+    .actions-section {
+        position: absolute;
+        bottom: 0;
+
+        //position: relative;
+        //height: @actions-section-height;
+        width : 100%;
+        padding: 15px 10px 15px;
+
+        background-color: @sca-light-color;
+
+        button {
+            width: 43%;
+            margin: 0 3%;
+        }
+    }
+
+    .filter {
+        position: relative;
+
+        margin-bottom: 15px;
+        padding: 10px 10px 5px;
+
+        border-radius: 3px;
+
+        background-color: @sca-light-color;
+        box-shadow: 0 2px 5px 2px @sca-shadow-color;
+
+        font-size: @small-text;
+        font-weight: @light-text;
+
+        .filter-name {
+            font-size: @small-text;
+            font-weight: @bold-text;
+        }
+
+        .filter-prompt {
+            font-size: @small-text;
+            font-weight: @bold-text;
+            margin-bottom: 15px;
+        }
+
+        .filter-content {
+            padding-left: 5px;
+
+            .checkbox {
+                max-height: 150px;
+                overflow-y: auto;
+            }
+
+            .radio {
+                padding-left: 1px; //radio buttons were being cropped
+                max-height: 150px;
+                overflow-y: auto;
+            }
+        }
+
+        .filter-param {
+            margin-bottom: 10px;
+
+            font-size: @small-text;
+            font-weight: @light-text;
+
+            select {
+                max-width: 85%;
+            }
+
+            form-group {
+                margin-bottom: 10px;
+            }
+
+            .number-param {
+                width: 90%;
+            }
+        }
+
+        .filter-actions {
+            margin-top: 15px;
+        }
+    }
+}
+
+.results-section {
+    position: absolute;
+
+    left: @filter-bar-width;
+    top: 0;
+    width: @results-screen-width;
+    height: 100%;
+    border: solid 5px @sca-grey-color;
+
+    .results-screen {
+        position: absolute;
+        height: @results-screen-height;
+        width: 100%;
+
+        background-color: @sca-grey-color;
+    }
+
+    analysis-bar {
+        position: absolute;
+
+        top : @results-screen-height;
+        height: @analysis-bar-height;
+        width: 100%;
+
+        border-top: solid 5px @sca-grey-color;
+        background-color: @sca-light-color;
+
+        @tabs-height : 20%;
+        @content-height : 100% - @tabs-height;
+
+        ul.nav.nav-tabs {
+            position: absolute;
+            //height: @tabs-height;
+            width: 100%;
+            overflow-y: hidden;
+
+            border-bottom: 0px;
+
+            li.active > a {
+                background-color: @sca-light-color;
+            }
+        }
+
+        .nav > li > a {
+            height: 100%;
+        }
+
+        .tab-content {
+            position: absolute;
+
+            height: @content-height;
+            top: @tabs-height;
+            width: 100%;
+            background-color: @sca-light-color;
+
+            .h-scrollable-content {
+                position: absolute;
+
+                height: 100%;
+                width: 100%;
+
+                padding: 10px 15px;
+
+                white-space: nowrap;
+                overflow-x: auto;
+                overflow-y: auto;
+            }
+
+            .h-scrollable-block {
+                position: relative;
+                display: inline-block;
+                vertical-align: top;
+            }
+
+            .snapshots {
+                .h-scrollable-content;
+
+                .snapshot-container {
+                    .h-scrollable-block;
+
+                    height: 100%;
+                    max-width: 70%;
+                    margin-right: 15px;
+
+                    .snapshot-bar-action {
+                        position: relative;
+                        height: 90%;
+                        top: 5%;
+                    }
+                }
+
+                @snapshot-header-height : 30px;
+                @snapshot-content-height : 100%;
+                @snapshot-img-height : calc(~'(@{snapshot-content-height} - @{snapshot-header-height})');
+                @snapshot-v-space : (100% - @snapshot-content-height) / 2.0;
+
+                div.snapshot {
+                    .h-scrollable-block;
+
+                    height: @snapshot-content-height;
+                    top: @snapshot-v-space;
+                    margin: 0px 5px;
+                }
+
+                .snapshot-header {
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    max-height: 80%;
+                    width: 100%;
+
+                    color: @sca-light-color;
+                    font-size: @medium-text;
+
+                    background: rgba(0, 0, 0, 0.6);
+                    padding: 5px;
+                    margin: 0;
+
+                }
+
+                .snapshot-header-edit {
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 100%;
+                }
+
+                img.snapshot {
+                    .h-scrollable-block;
+
+                    height: 90%;
+                    top: 5%;
+                }
+
+                .snapshot-actions {
+                    .h-scrollable-block;
+
+                    height: 90%;
+                    top: 5%;
+                    //width: 35px;
+
+                    .snapshot-action {
+                        width: 45px;
+                        margin-bottom: 5px;
+                    }
+                }
+            }
+
+            .analysis-actions {
+                .h-scrollable-content;
+
+                .analysis-action {
+                    .h-scrollable-block;
+
+                    height: 100%;
+
+                    .form-inline {
+                        margin-bottom: 10px;
+
+                        .form-group.after-first {
+                            margin-left: 10px;
+                        }
+                    }
+                }
+
+                .analysis-action.after-first {
+                    margin-left: 15px;
+                    padding-left: 15px;
+                    border-left: solid 2px @sca-grey-color;
+                }
+            }
+        }
+
+        .nav {
+            background-color: @sca-grey-color;
+        }
+    }
+
+    .questionnaire-results {
+        overflow-y: auto;
+        background-color: @sca-light-color;
+
+        @inter-questions-v-padding : 30px;
+
+        .phase-separator {
+            width: 80%;
+            border-top-color: @sca-grey-color;
+        }
+
+        .question-container {
+            position: relative;
+            display: block;
+
+            width: 100%;
+
+            padding: 15px @inter-questions-v-padding;
+            //border-bottom: solid 4px @sca-grey-color;
+
+            .question-header {
+                position: relative;
+
+                width: 75%;
+                font-size: @big-text;
+                font-weight: @bold-text;
+            }
+
+            @chart-width : 50%;
+
+            .side-by-side {
+                display: inline-block;
+                vertical-align: top;
+            }
+
+            .question-chart {
+                position: relative;
+                .side-by-side;
+
+                width: @chart-width;
+                left: 0;
+            }
+
+            .chart-actions {
+                @small-input-box: 50px;
+                @medium-input-box: 90px;
+
+                position: relative;
+                .side-by-side;
+
+                width: 100% - @chart-width;
+                right: 0;
+                padding-left: 40px;
+                padding-right: 5px;
+
+                .chart-action-header {
+                    font-size: @medium-text;
+                    font-weight: @bold-text;
+                }
+
+                .chart-action-input-spacing {
+                    margin-right: 5px;
+                    margin-bottom: 10px;
+
+                    .intra-spacing {
+                        margin-right: 5px;
+                    }
+                }
+
+                .chart-action-inputs-inline {
+                    .chart-action-input-spacing;
+
+                    display: inline-block;
+                    margin-right: 15px;
+                }
+
+                .chart-action-input {
+                    width: @medium-input-box;
+                }
+
+                .chart-action-input-sm {
+                    width: @small-input-box;
+                }
+
+                .chart-action-input-lg {
+                    width: auto;
+                }
+
+                .chart-action-btn {
+                    margin-bottom: 15px;
+                }
+
+                .chart-actions-footer {
+                    margin-top: 10px;
+                }
+            }
+        }
+    }
+
+    #map {
+        position: absolute;
+
+        width: 100%;
+        left: 0;
+        height: 100%;
+        top: 0;
+    }
+
+    .info-on-map {
+        padding: 5px 10px 10px;
+        background-color: @sca-light-color;
+
+        border-radius: 5px;
+        box-shadow: 0 2px 5px 2px @sca-shadow-color;
+    }
+
+    .info-on-map.legend {
+        line-height: 18px;
+    }
+    .info-on-map.legend i {
+        width: 18px;
+        height: 18px;
+        float: left;
+        margin-right: 8px;
+        opacity: 0.55;
+    }
+
+    .info {
+        position: absolute;
+        width: 50%;
+        left: 25%;
+        top: 25%;
+
+        min-height: 30%;
+        max-height: 50%;
+        overflow-y: scroll;
+
+        padding: 15px 20px 15px;
+
+        background-color: @sca-light-color;
+        box-shadow: 0 2px 5px 2px @sca-shadow-color;
+
+        &.stretched {
+            top: 12.5%;
+            max-height: 75%;
+            overflow-y: auto;
+        }
+
+        .info-text {
+            font-size: @medium-text;
+
+            text-align: center;
+        }
+
+        .loading-button {
+            position: absolute;
+
+            left: 12.5%;
+            width: 75%;
+            bottom: 15px;
+        }
+
+        .dropdown {
+            .loading-button {
+                position: static;
+
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                margin: 30px auto 0;
+            }
+
+            .scrollable-dropdown {
+                height: auto;
+                max-height: 200px;
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
+        }
+    }
+}
+
+.filter-modal {
+    .scrollable-selection {
+        max-height: 150px;
+        padding: 15px;
+
+        overflow-y: auto;
+    }
+
+    .help-block {
+        margin-top: 0px;
+        margin-left: 30px;
+    }
+}
+
+.bounds-modal {
+    height: 450px;
+
+    #bounds-map {
+        position: absolute;
+
+        width: 100%;
+        left: 0;
+        height: 450px;
+        top: 0;
+    }
+}

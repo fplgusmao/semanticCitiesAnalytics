@@ -1,0 +1,107 @@
+@import "scaApp-properties.less";
+
+@navbar-height : 60px;
+
+.app-container {
+    position: absolute;
+
+    height: 100%;
+    width: 100%;
+}
+
+.state-container {
+    /*position: absolute;
+    left: 0;
+    top: @navbar-height;
+    width: 100%;
+    height: 100% - @navbar-height;*/
+    position: absolute;
+    height: calc(~'(100% - @{navbar-height})');
+    width: 100%;
+    top: @navbar-height;
+}
+
+.navbar-brand,
+.navbar-nav li a {
+    line-height: @navbar-height;
+    height: @navbar-height;
+    padding-top: 0;
+}
+
+/*.navbar-container {
+    height: @navbar-height;
+
+    .navbar { //hack
+        position: relative;
+    }
+}*/
+
+// navbar cutom theme
+@bgDefault      : @sca-dark-color;
+@bgHighlight    : #666666;
+@colDefault     : #eeeeee;
+@colHighlight   : #ffffff;
+@dropDown       : false;
+.ddm() when (@dropDown) {
+    > li > .dropdown-menu {
+        background-color: @bgDefault;
+        > li {
+            > a {
+                color: @colDefault;
+                &:hover,  &:focus {
+                    color: @colHighlight;
+                    background-color: @bgHighlight; }}
+            > .divider {
+                background-color: @bgHighlight;}}}
+    .open .dropdown-menu > .active {
+        > a, > a:hover, > a:focus {
+            color: @colHighlight;
+            background-color: @bgHighlight; }}}
+.navbar-default {
+    background-color: @bgDefault;
+    border-color: @bgHighlight;
+    .navbar-brand {
+        color: @colDefault;
+        &:hover, &:focus {
+            color: @colHighlight; }}
+    .navbar-text {
+        color: @colDefault; }
+    .navbar-nav {
+        > li {
+            > a {
+                color: @colDefault;
+                &:hover,  &:focus {
+                    color: @colHighlight; }}}
+        .ddm;
+        > .active {
+            > a, > a:hover, > a:focus {
+                color: @colHighlight;
+                background-color: @bgHighlight; }}
+        > .open {
+            > a, > a:hover, > a:focus {
+                color: @colHighlight;
+                background-color: @bgHighlight; }}}
+    .navbar-toggle {
+        border-color: @bgHighlight;
+        &:hover, &:focus {
+            background-color: @bgHighlight; }
+        .icon-bar {
+            background-color: @colDefault; }}
+    .navbar-collapse,
+    .navbar-form {
+        border-color: @colDefault; }
+    .navbar-link {
+        color: @colDefault;
+        &:hover {
+            color: @colHighlight; }}}
+@media (max-width: 767px) {
+    .navbar-default .navbar-nav .open .dropdown-menu {
+        > li > a {
+            color: @colDefault;
+            &:hover, &:focus {
+                color: @colHighlight; }}
+        > .active {
+            > a, > a:hover, > a:focus {
+                color: @colHighlight;
+                background-color: @bgHighlight; }}}
+}

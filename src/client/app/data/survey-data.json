@@ -1,0 +1,359 @@
+[{
+    "type": "survey-information",
+    "comment": "Small description to aid me when overviewing the survey.",
+    "title": "A possible survey to gather mental maps.",
+    "description": [
+        "This survey contains examples for all the possible interactions in the Semantic Cities",
+        "Note: every survey of this framework must begin with a phase of this type",
+        "Note 2: that same phase should specify the next phases to navigate to",
+        "Note 3: there is no support for mobile devices yet"
+    ],
+    "nextSteps": [1, 2, 3, 4, 5]
+}, {
+    "type": "questionnaire",
+    "comment": "Phase with all possible type of answers",
+    "questions": [{
+        "questionBody": "This a question with a 'choose-one' answer. Users can only choose one of the available options.",
+        "answer": {
+            "typeOfAnswer": "choose-one",
+            "answerOptions": [{
+                "answerBody": "One option"
+            }, {
+                "answerBody": "Another option"
+            }]
+        }
+    }, {
+        "questionBody": "This a question with a 'choose-multiple' answer. Users can choose one or more of the available options.",
+        "answer": {
+            "typeOfAnswer": "choose-multiple",
+            "answerOptions": [{
+                "answerBody": "Select this"
+            }, {
+                "answerBody": "And also this"
+            }]
+        }
+    }, {
+        "questionBody": "This is a question with a 'number-input' answer. Users can insert a number between a predefined maximum and minimum value.",
+        "answer": {
+            "typeOfAnswer": "number-input",
+            "minValue": 0,
+            "maxValue": 100000,
+            "initValue": 1000,
+            "supportText": "miles away"
+        }
+    }, {
+        "questionBody": "This is a question with a 'month-input' answer. Users can give a month and year, to give an inaccurate date.",
+        "answer": {
+            "typeOfAnswer": "month-input"
+        }
+    }, {
+        "questionBody": "This is a question with a 'time-input' answer. Users can give a number and a time unit, this way specifying a certain amount of time.",
+        "answer": {
+            "typeOfAnswer": "time-input",
+            "minValue": 1,
+            "maxValue": 100,
+            "initValue": 1,
+            "timeUnits": ["Years", "Months", "Days"]
+        }
+    }]
+}, {
+    "type": "point-a-place",
+    "title": "Point only one place",
+    "description": [
+        "Users can click on the map to place a marker on it",
+        "The marker is customizable both in color and size (this given in meters)",
+        "Almost every configuration of the map is possible"
+    ],
+    "instructions": [
+        "Click anywhere to place a marker",
+        "Click the marker to remove it",
+        "Confirm by clicking \"Next\""
+    ],
+    "mapView": {
+        "view": {
+            "center": [40.7591704, -74.0392707],
+            "zoomLevel": 13,
+            "bounds": {
+                "northEast": [41.7591704, -73.0392707],
+                "southWest": [39.7591704, -75.0392707]
+            }
+        },
+        "tiles": {
+            "tilesUrl": "http://{s}.tile.osm.org/{z}/{x}/{y}.png",
+            "tilesAttributes": {
+                "attribution": "&copy; <a href='http://osm.org/copyright'>OpenStreetMap</a> contributors",
+                "maxZoom": 18,
+                "minZoom": 10
+            }
+        }
+    },
+    "markerRadius": 500,
+    "markerDetails": {
+        "color": "#0F496B",
+        "fillColor": "#347296",
+        "fillOpacity": 0.75
+    }
+}, {
+    "type": "point-multiple-places",
+    "title": "Point one or more places",
+    "description": [
+        "Same as before, but now users can place multiple markers"
+    ],
+    "instructions": [
+        "Click anywhere to place a marker",
+        "Click the marker to remove it",
+        "Confirm by clicking \"Next\""
+    ],
+    "mapView": {
+        "view": {
+            "center": [40.7591704, -74.0392707],
+            "zoomLevel": 13,
+            "bounds": {
+                "northEast": [41.7591704, -73.0392707],
+                "southWest": [39.7591704, -75.0392707]
+            }
+        },
+        "tiles": {
+            "tilesUrl": "http://{s}.tile.osm.org/{z}/{x}/{y}.png",
+            "tilesAttributes": {
+                "attribution": "&copy; <a href='http://osm.org/copyright'>OpenStreetMap</a> contributors",
+                "maxZoom": 18,
+                "minZoom": 10
+            }
+        }
+    },
+    "markerRadius": 350,
+    "markerDetails": {
+        "color": "#9F491B",
+        "fillColor": "#A27219",
+        "fillOpacity": 0.75
+    }
+}, {
+    "type": "draw-area",
+    "title": "Draw one area",
+    "description": [
+        "Users can click and drag on the map to draw a polygon",
+        "Users can draw many polygons in order to represent the requested area. Intersecting polygons are merged."
+    ],
+    "instructions": [
+        "Draw as many areas as you wish",
+        "DRAW on the map by clicking \"Draw Area\", then click and drag on the map.",
+        "DELETE an area by clicking \"Delete Area\", then select the area to delete.",
+        "MOVE the map by clicking \"Move Map\", then click and drag the map to move it.",
+        "EDIT an area's shape by dragging the small circles on its edges."
+    ],
+    "mapView": {
+        "view": {
+            "center": [40.7591704, -74.0392707],
+            "zoomLevel": 13,
+            "bounds": {
+                "northEast": [41.7591704, -73.0392707],
+                "southWest": [39.7591704, -75.0392707]
+            }
+        },
+        "tiles": {
+            "tilesUrl": "http://{s}.tile.osm.org/{z}/{x}/{y}.png",
+            "tilesAttributes": {
+                "attribution": "&copy; <a href='http://osm.org/copyright'>OpenStreetMap</a> contributors",
+                "maxZoom": 18,
+                "minZoom": 10
+            }
+        }
+    }
+}, {
+    "type": "draw-multiple-areas",
+    "title": "Draw New York City's boroughs",
+    "description": [
+        "Users can select one or more of the available areas to draw its limits.",
+        "Each of those areas is like a 'draw-area' phase. The survey designer must specify it accordingly."
+    ],
+    "instructions": [
+        "Click on a borough's name to then draw its area.",
+        "Do it for as many nborough's as you like.",
+        "Submit all of your drawn areas by clicking \"Next\""
+    ],
+    "mapView": {
+        "view": {
+            "center": [40.7591704, -74.0392707],
+            "zoomLevel": 13,
+            "bounds": {
+                "northEast": [41.7591704, -73.0392707],
+                "southWest": [39.7591704, -75.0392707]
+            }
+        },
+        "tiles": {
+            "tilesUrl": "http://{s}.tile.osm.org/{z}/{x}/{y}.png",
+            "tilesAttributes": {
+                "attribution": "&copy; <a href='http://osm.org/copyright'>OpenStreetMap</a> contributors",
+                "maxZoom": 18,
+                "minZoom": 10
+            }
+        }
+    },
+    "subPhases": [{
+        "name": "Manhattan",
+        "areaNumber": 0,
+        "phaseData": {
+            "type": "draw-area",
+            "title": "Draw Manhattan",
+            "description": ["Draw what you think Manhattan's limits are."],
+            "instructions": [
+                "Draw as many areas as you wish",
+                "DRAW on the map by clicking \"Draw Area\", then click and drag on the map.",
+                "DELETE an area by clicking \"Delete Area\", then select the area to delete.",
+                "MOVE the map by clicking \"Move Map\", then click and drag the map to move it.",
+                "EDIT an area's shape by dragging the small circles on its edges."
+            ],
+            "mapView": {
+                "view": {
+                    "center": [40.7591704, -74.0392707],
+                    "zoomLevel": 13,
+                    "bounds": {
+                        "northEast": [41.7591704, -73.0392707],
+                        "southWest": [39.7591704, -75.0392707]
+                    }
+                },
+                "tiles": {
+                    "tilesUrl": "http://{s}.tile.osm.org/{z}/{x}/{y}.png",
+                    "tilesAttributes": {
+                        "attribution": "&copy; <a href='http://osm.org/copyright'>OpenStreetMap</a> contributors",
+                        "maxZoom": 18,
+                        "minZoom": 10
+                    }
+                }
+            }
+        }
+    }, {
+        "name": "Bronx",
+        "areaNumber": 1,
+        "phaseData": {
+            "type": "draw-area",
+            "title": "Draw Bronx",
+            "description": ["Draw what you think Bronx's limits are."],
+            "instructions": [
+                "Draw as many areas as you wish",
+                "DRAW on the map by clicking \"Draw Area\", then click and drag on the map.",
+                "DELETE an area by clicking \"Delete Area\", then select the area to delete.",
+                "MOVE the map by clicking \"Move Map\", then click and drag the map to move it.",
+                "EDIT an area's shape by dragging the small circles on its edges."
+            ],
+            "mapView": {
+                "view": {
+                    "center": [40.7591704, -74.0392707],
+                    "zoomLevel": 13,
+                    "bounds": {
+                        "northEast": [41.7591704, -73.0392707],
+                        "southWest": [39.7591704, -75.0392707]
+                    }
+                },
+                "tiles": {
+                    "tilesUrl": "http://{s}.tile.osm.org/{z}/{x}/{y}.png",
+                    "tilesAttributes": {
+                        "attribution": "&copy; <a href='http://osm.org/copyright'>OpenStreetMap</a> contributors",
+                        "maxZoom": 18,
+                        "minZoom": 10
+                    }
+                }
+            }
+        }
+    }, {
+        "name": "Queens",
+        "areaNumber": 2,
+        "phaseData": {
+            "type": "draw-area",
+            "title": "Draw Queens",
+            "description": ["Draw what you think Queens' limits are."],
+            "instructions": [
+                "Draw as many areas as you wish",
+                "DRAW on the map by clicking \"Draw Area\", then click and drag on the map.",
+                "DELETE an area by clicking \"Delete Area\", then select the area to delete.",
+                "MOVE the map by clicking \"Move Map\", then click and drag the map to move it.",
+                "EDIT an area's shape by dragging the small circles on its edges."
+            ],
+            "mapView": {
+                "view": {
+                    "center": [40.7591704, -74.0392707],
+                    "zoomLevel": 13,
+                    "bounds": {
+                        "northEast": [41.7591704, -73.0392707],
+                        "southWest": [39.7591704, -75.0392707]
+                    }
+                },
+                "tiles": {
+                    "tilesUrl": "http://{s}.tile.osm.org/{z}/{x}/{y}.png",
+                    "tilesAttributes": {
+                        "attribution": "&copy; <a href='http://osm.org/copyright'>OpenStreetMap</a> contributors",
+                        "maxZoom": 18,
+                        "minZoom": 10
+                    }
+                }
+            }
+        }
+    }, {
+        "name": "Brooklyn",
+        "areaNumber": 3,
+        "phaseData": {
+            "type": "draw-area",
+            "title": "Draw Brooklyn",
+            "description": ["Draw what you think Brooklyn's limits are."],
+            "instructions": [
+                "Draw as many areas as you wish",
+                "DRAW on the map by clicking \"Draw Area\", then click and drag on the map.",
+                "DELETE an area by clicking \"Delete Area\", then select the area to delete.",
+                "MOVE the map by clicking \"Move Map\", then click and drag the map to move it.",
+                "EDIT an area's shape by dragging the small circles on its edges."
+            ],
+            "mapView": {
+                "view": {
+                    "center": [40.7591704, -74.0392707],
+                    "zoomLevel": 13,
+                    "bounds": {
+                        "northEast": [41.7591704, -73.0392707],
+                        "southWest": [39.7591704, -75.0392707]
+                    }
+                },
+                "tiles": {
+                    "tilesUrl": "http://{s}.tile.osm.org/{z}/{x}/{y}.png",
+                    "tilesAttributes": {
+                        "attribution": "&copy; <a href='http://osm.org/copyright'>OpenStreetMap</a> contributors",
+                        "maxZoom": 18,
+                        "minZoom": 10
+                    }
+                }
+            }
+        }
+    }, {
+        "name": "Staten Island",
+        "areaNumber": 4,
+        "phaseData": {
+            "type": "draw-area",
+            "title": "Draw Staten Island",
+            "description": ["Draw what you think Staten Island's limits are."],
+            "instructions": [
+                "Draw as many areas as you wish",
+                "DRAW on the map by clicking \"Draw Area\", then click and drag on the map.",
+                "DELETE an area by clicking \"Delete Area\", then select the area to delete.",
+                "MOVE the map by clicking \"Move Map\", then click and drag the map to move it.",
+                "EDIT an area's shape by dragging the small circles on its edges."
+            ],
+            "mapView": {
+                "view": {
+                    "center": [40.7591704, -74.0392707],
+                    "zoomLevel": 13,
+                    "bounds": {
+                        "northEast": [41.7591704, -73.0392707],
+                        "southWest": [39.7591704, -75.0392707]
+                    }
+                },
+                "tiles": {
+                    "tilesUrl": "http://{s}.tile.osm.org/{z}/{x}/{y}.png",
+                    "tilesAttributes": {
+                        "attribution": "&copy; <a href='http://osm.org/copyright'>OpenStreetMap</a> contributors",
+                        "maxZoom": 18,
+                        "minZoom": 10
+                    }
+                }
+            }
+        }
+    }]
+}]

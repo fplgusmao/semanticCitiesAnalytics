@@ -1,0 +1,121 @@
+<div class="results-screen questionnaire-results">
+    <div ng-repeat="phaseN in vm.phasesUnderAnalysis track by $index"
+         ng-init="phaseIndex = $index">
+        <div ng-repeat="question in vm.questionsInPhase(phaseN)"
+             ng-init="questionN = $index; config = vm.getChartConfiguration(phaseN,questionN)"
+             class="question-container">
+            <div class="question-header">
+                <h3>{{question.questionBody || 'Untitled'}} <small>Question {{questionN}} from Phase {{phaseN}}</small> </h3>
+            </div>
+            <div class="question-chart">
+                <p ng-hide="vm.dataForChart(phaseN, questionN)[0].length">(Not enough data)</p>
+                <canvas ng-show="vm.dataForChart(phaseN, questionN)[0].length"
+                        id="bar" class="chart chart-bar" ng-class="'graph' + phaseN + '.' + questionN"
+                        chart-data="vm.dataForChart(phaseN, questionN)"
+                        chart-labels="vm.labelsForChart(phaseN, questionN)">
+                </canvas>
+            </div>
+            <div class="chart-actions">
+                <div ng-if="question.answer.typeOfAnswer === 'number-input'">
+                    <h5 class="chart-action-header">Choose the value "levels" for the chart's bars</h5>
+                    <div class="form-inline">
+                        <div class="input-group input-group-sm chart-action-input-spacing"
+                             ng-repeat="level in config.distributionLevels track by $index">
+                            <span class="input-group-btn">
+                                <button class="btn btn-secondary" type="button"
+                                        ng-click="vm.removeDistributionLevel(phaseN, questionN, $index)">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                </button>
+                            </span>
+                            <input type="number" class="form-control chart-action-input-sm" placeholder="11"
+                                   ng-model="config.distributionLevels[$index]">
+                        </div>
+                    </div>
+                    <button class="btn btn-default chart-action-btn"
+                            ng-click="vm.createDistributionLevel(phaseN, questionN)">Add level</button>
+                </div>
+
+                <div ng-if="question.answer.typeOfAnswer === 'month-input'">
+                    <h5 class="chart-action-header">Choose the value "levels" for the chart's bars</h5>
+                    <div class="form-inline" >
+                        <div class="chart-action-inputs-inline"
+                             ng-repeat="level in config.distributionLevels track by $index">
+                            <button class="btn btn-secondary btn-sm intra-spacing"
+                                    ng-click="vm.removeDistributionLevel(phaseN, questionN, $index)">
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                            </button>
+                            <div class="form-group">
+                                <input type="number" class="form-control input-sm chart-action-input-sm intra-spacing" placeholder="mm"
+                                       ng-model="config.distributionLevels[$index].month">
+                            </div>
+                            <div class="form-group">
+                                <input type="number" class="form-control input-sm chart-action-input intra-spacing" placeholder="yyyy"
+                                       ng-model="config.distributionLevels[$index].year">
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-default chart-action-btn"
+                            ng-click="vm.createDistributionLevel(phaseN, questionN)">Add level</button>
+                </div>
+
+                <div ng-if="question.answer.typeOfAnswer === 'time-input'">
+                    <h5 class="chart-action-header">Choose the value "levels" for the chart's bars</h5>
+                    <div class="form-inline" >
+                        <div class="chart-action-inputs-inline"
+                             ng-repeat="level in config.distributionLevels track by $index">
+                            <button class="btn btn-secondary btn-sm intra-spacing"
+                                    ng-click="vm.removeDistributionLevel(phaseN, questionN, $index)">
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                            </button>
+                            <div class="form-group">
+                                <input type="number" class="form-control input-sm chart-action-input-sm intra-spacing" placeholder="7"
+                                       ng-model="config.distributionLevels[$index].number">
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control"
+                                        ng-model="config.distributionLevels[$index].timeUnit"
+                                        ng-options="unit.toLowerCase() as unit for unit in question.answer.timeUnits">
+                                    <option value="" disabled selected style="display:none;">Time unit</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-default chart-action-btn"
+                            ng-click="vm.createDistributionLevel(phaseN, questionN)">Add level</button>
+                </div>
+
+                <div ng-if="question.answer.typeOfAnswer === 'choose-one' || question.answer.typeOfAnswer === 'choose-multiple'">
+                    <h5 class="chart-action-header">Choose the options to show on the chart</h5>
+                    <div class="checkbox" ng-repeat="option in question.answer.answerOptions">
+                        <label>
+                            <input type="checkbox"
+                                   ng-name="phaseNumber + ' ' + questionNumber"
+                                   ng-model="config.optionsToShow[$index]"> {{option.answerBody}}
+                        </label>
+                    </div>
+                </div>
+
+                <div ng-if="question.answer.typeOfAnswer === 'select-dropdown'">
+                    <h5 class="chart-action-header">Choose the options to show on the chart</h5>
+                    <div class="checkbox" ng-repeat="option in config.optionsToShow">
+                        <label>
+                            <input type="checkbox"
+                                   ng-name="phaseNumber + ' ' + questionNumber"
+                                   ng-model="option.showOption"> {{option.optionName}}
+                        </label>
+                    </div>
+                </div>
+
+                <div class="chart-actions-footer">
+                    <button class="btn btn-primary"
+                            ng-click="vm.loadChart(phaseN, questionN)">Apply configurations</button>
+                    <button class="btn btn-primary"
+                            ng-click="vm.saveSnapshot(phaseN, questionN)"><i class="fa fa-camera" aria-hidden="true"></i> Capture graph</button>
+                </div>
+            </div>
+        </div>
+        <hr class="phase-separator" ng-hide="$last">
+    </div>
+</div>
+
+<analysis-bar></analysis-bar>

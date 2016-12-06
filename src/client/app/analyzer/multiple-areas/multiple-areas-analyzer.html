@@ -1,0 +1,143 @@
+<div class="results-screen">
+    <div ng-hide="vm.loaded">
+        <div class="info">
+            <p class="info-text">Loading the results may take a while. Use the button bellow to select the area to analyze only when appropriate for you.</p>
+
+            <div class="form-inline">
+                <select class="form-control" ng-model="vm.activeArea" ng-options="area.name for area in vm.areas | orderBy : 'name'">
+                    <option value="" disabled selected style="display:none;">Select area</option>
+                </select>
+                <button class="btn btn-default"
+                        ng-click="vm.loadResults(vm.activeArea.areaNumber)">Load</button>
+            </div>
+
+<!--
+            <div class="dropdown">
+                <button class="btn btn-primary btn-block dropdown-toggle loading-button" type="button"
+                        id="areaSelect" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Select Area
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu scrollable-dropdown">
+                    <li ng-repeat="area in vm.areas | orderBy: 'name'">
+                        <a ng-click="vm.loadResults(area.areaNumber)">{{area.name}}</a>
+                    </li>
+                </ul>
+            </div>
+-->
+        </div>
+        <div ng-show="vm.loading">
+            <h4>Loading results</h4>
+            <small>{{vm.loadingState}}</small>
+        </div>
+    </div>
+    <div ng-show="vm.loaded" id="map"></div>
+</div>
+
+<analysis-bar>
+    <div class="analysis-action">
+        <h5>Save map snapshot</h5>
+        <button class="btn btn-default"
+                ng-class="{disabled : !vm.loaded}"
+                ng-click="vm.saveSnapshot()"><i class="fa fa-camera" aria-hidden="true"></i> Capture</button>
+    </div>
+    <div class="analysis-action after-first">
+        <h5>Area under analysis</h5>
+        <div class="form-inline">
+            <select class="form-control" ng-model="vm.activeArea" ng-options="area.name for area in vm.areas | orderBy : 'name'">
+                <option value="" disabled selected style="display:none;">Select area</option>
+            </select>
+        </div>
+        <button class="btn btn-default"
+                ng-click="vm.loadResults(vm.activeArea.areaNumber)">Load</button>
+    </div>
+
+    <div class="analysis-action after-first">
+        <h5>Hexagon radius <small> (absolute radius in Km)</small></h5>
+        <div class="form-inline">
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Radius</span>
+                    <input type="number" class="form-control" placeholder="Radius" ng-model="vm.analysisOptions.hexSize">
+                    <span class="input-group-addon">Km</span>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-default"
+                ng-click="vm.changeHexSize()">Apply</button> <span class="text-danger" ng-hide="vm.analysisOptions.hexSizeValid">Invalid value</span>
+    </div>
+
+    <div class="analysis-action after-first">
+        <h5>Include guiding features</h5>
+        <div class="form-inline">
+            <textarea class="form-control" rows="2"
+                      placeholder="GeoJson Feature Collection"
+                      ng-model="vm.guidingLayerGeoJson"></textarea>
+        </div>
+        <button class="btn btn-default"
+                ng-click="vm.loadGuidingLayer()">Add to map</button> <span class="text-danger" ng-hide="vm.guidingLayerJsonValid">Invalid Feature Collection</span>
+    </div>
+
+    <div class="analysis-action after-first">
+        <h5>Agreement floor and ceiling <small> (in percentage)</small></h5>
+        <div class="form-inline">
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Floor</span>
+                    <input type="number" class="form-control" placeholder="0" min="0" max="100"
+                           ng-model="vm.analysisOptions.agreementFloor">
+                    <span class="input-group-addon">%</span>
+                </div>
+            </div>
+            <div class="form-group after-first">
+                <div class="input-group">
+                    <span class="input-group-addon">Ceil</span>
+                    <input type="Number" class="form-control" placeholder="100" min="0" max="100"
+                           ng-model="vm.analysisOptions.agreementCeil">
+                    <span class="input-group-addon">%</span>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-default"
+                ng-click="vm.changeAgreementCaps()">Apply</button>
+        <span class="text-danger" ng-hide="vm.agreementCapsValid">Invalid value</span>
+    </div>
+
+    <div class="analysis-action after-first">
+        <h5>Number of steps in scale</h5>
+        <div class="form-inline">
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="number" class="form-control" placeholder="2" min="2" max="20"
+                           ng-model="vm.colorScaleSteps">
+                    <span class="input-group-addon">steps</span>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-default"
+                ng-click="vm.changeColorScaleSteps()">Apply</button> <span class="text-danger" ng-hide="vm.colorScaleStepsValid">Invalid value</span>
+    </div>
+
+    <div class="analysis-action after-first">
+        <h5>Hexagon color range <small> (in hexadecimal RGB)</small></h5>
+        <div class="form-inline">
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Floor color</span>
+                    <input type="text" class="form-control" placeholder="FFFFFF"
+                           ng-model="vm.analysisOptions.agreementFloorColor">
+                </div>
+            </div>
+            <div class="form-group after-first">
+                <div class="input-group">
+                    <span class="input-group-addon">Ceil color</span>
+                    <input type="text" class="form-control" placeholder="000000"
+                           ng-model="vm.analysisOptions.agreementCeilColor">
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-default"
+                ng-click="vm.changeColorRange()">Apply</button>
+        <span class="text-danger"ng-hide="vm.agreementColorsValid">Invalid value</span>
+    </div>
+</analysis-bar>

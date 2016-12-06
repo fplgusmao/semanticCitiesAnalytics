@@ -1,0 +1,86 @@
+@import "scaApp-properties.less";
+
+@header-height: 12.5%;
+@phase-selector-height: 75%;
+@footer-height: 100% - @header-height - @phase-selector-height;
+
+@phase-selector-width: 96%;
+@phase-selector-margin: (100% - @phase-selector-width) / 2.0;
+
+@thumbnail-height : 55%;
+
+@thumbnails-per-row : 4;
+@thumbnail-width : 0.8 * (100% / @thumbnails-per-row);
+@thumbnail-inter-space : 0.2 * (100% / @thumbnails-per-row) / 2.0;
+
+.dashboard {
+    position: relative;
+
+    top: 0;
+    left: 0;
+
+    height: 100%;
+    width: 100%;
+
+    background-color: @sca-light-color;
+
+    .header {
+        position: relative;
+        height: @header-height;
+        top: 0;
+
+        .section-title {
+            position: absolute;
+            width: 100%;
+
+            font-weight: @bold-text;
+            text-align: center;
+        }
+    }
+
+    .footer {
+        position: relative;
+        height: @footer-height;
+        width: 100%;
+
+        button {
+            margin-right: @phase-selector-margin;
+            margin-top: @phase-selector-margin;
+            width: 15%;
+        }
+    }
+
+    .phase-selector {
+        background: @sca-grey-color;
+        box-shadow: inset 0px 0px 15px 0px @sca-shadow-color;
+
+        position: relative;
+        height: @phase-selector-height;
+        width: @phase-selector-width;
+        margin: 0 @phase-selector-margin;
+
+        padding-top: 15px;
+
+        overflow-y: auto;
+
+        .thumbnail-container {
+            position: relative;
+
+            height: @thumbnail-height;
+            width: @thumbnail-width;
+
+            margin: 0 @thumbnail-inter-space @thumbnail-inter-space;
+
+            float: left;
+        }
+    }
+
+    .loading-container {
+        position: relative;
+        top: 40%;
+
+        text-align: center;
+        font-size: @very-big-text;
+        font-weight: @very-bold-text;
+    }
+}

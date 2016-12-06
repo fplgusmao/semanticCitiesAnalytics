@@ -1,0 +1,12 @@
+# Dependency directory
+# https://docs.npmjs.com/misc/faq#should-i-check-my-node-modules-folder-into-git
+node_modules/
+bower_components/
+report/
+build/
+
+# other
+.tmp
+
+src/client/app/db/db-config.php
+.DS_Store

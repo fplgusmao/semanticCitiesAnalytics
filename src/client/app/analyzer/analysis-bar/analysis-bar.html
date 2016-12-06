@@ -1,0 +1,56 @@
+<uib-tabset active="activeTab">
+    <uib-tab index="0" heading="Analysis Actions" disable="noActions">
+        <ng-transclude class="analysis-actions" ng-cloak></ng-transclude>
+    </uib-tab>
+    <uib-tab index="1" heading="Saved Snapshots">
+        <div class="snapshots">
+            <div class="snapshot-container" ng-repeat="snapshot in vm.savedSnapshots">
+                <div class="snapshot">
+                    <img class="snapshot"
+                         ng-src="{{snapshot.src}}">
+                    <h5 ng-if="snapshot.label && !vm.editingLabel($index)"
+                        class="snapshot-header">
+                        {{snapshot.label}}
+                    </h5>
+                    <div class="input-group snapshot-header-edit" ng-if="vm.editingSnapshotLabel($index)">
+                        <input type="text" class="form-control" placeholder="Label for snapshot..."
+                               ng-model="snapshot.label">
+                        <span class="input-group-btn">
+                            <button class="btn btn-success"
+                                    ng-click="vm.setSnapshotLabel($index)" type="button">
+                                <i class="fa fa-check" aria-hidden="true"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <div class="snapshot-actions">
+                    <a class="snapshot-action btn btn-block btn-default"
+                       sca-download-name="snapshot.label"
+                       ng-href="{{snapshot.src}}" download="results.png" target="_blank">
+                        <i class="fa fa-download" aria-hidden="true"></i>
+                    </a>
+<!--
+                    <button class="snapshot-action btn btn-block btn-default disabled">
+                        <i class="fa fa-download" aria-hidden="true"></i>
+                    </button>
+-->
+                    <button class="snapshot-action btn btn-block btn-default"
+                            ng-class='{disabled : vm.editingLabel($index)}'
+                            ng-click="vm.editSnapshotLabel($index)">
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                    </button>
+                    <button class="snapshot-action btn btn-block btn-danger"
+                            ng-click="vm.deleteSnapshot($index)">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="snapshot-container">
+                <button class="btn btn-info snapshot-bar-action"
+                        ng-click="vm.refreshSnapshots()">
+                    <i class="fa fa-refresh" aria-hidden="true"></i> Refresh
+                </button>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

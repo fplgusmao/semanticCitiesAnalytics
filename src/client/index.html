@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html ng-app="scaApp">
+
+<head>
+    <style>
+        /* This helps the ng-show/ng-hide animations start at the right place. */
+        /* Since Angular has this but needs to load, this gives us the class early. */
+
+        .ng-hide {
+            display: none!important;
+        }
+    </style>
+    <title ng-bind="title">
+        semanticCitiesAnalytics
+    </title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <base href="/">
+
+    <!-- change path bellow, for 'build', if using a sub-directory of the host -->
+    <!-- build:css styles/lib.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="/bower_components/toastr/toastr.css" />
+    <link rel="stylesheet" href="/bower_components/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="/bower_components/angular-chart.js/dist/angular-chart.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- change path bellow, for 'build', if using a sub-directory of the host -->
+    <!-- build:css styles/app.css -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="/.tmp/styles.css">
+    <!-- endinject -->
+    <!-- endbuild -->
+</head>
+
+<body>
+    <div>
+        <div ng-include="'app/layout/shell.html'"></div>
+        <div id="splash-page" ng-show="showSplash">
+            <div class="page-splash">
+                <div class="page-splash-message">
+                    Semantic Cities Analytics
+                </div>
+                <div class="progress progress-striped active page-progress-bar">
+                    <div class="bar"></div>
+                </div>
+            </div>
+        </div>
+        <script>L_PREFER_CANVAS = true;</script>
+    </div>
+
+    <!-- change path bellow, for 'build', if using a sub-directory of the host -->
+    <!-- build:js js/lib.js -->
+    <!-- bower:js -->
+    <script src="/bower_components/jquery/dist/jquery.js"></script>
+    <script src="/bower_components/angular/angular.js"></script>
+    <script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="/bower_components/toastr/toastr.js"></script>
+    <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="/bower_components/angular-animate/angular-animate.js"></script>
+    <script src="/bower_components/leaflet/dist/leaflet-src.js"></script>
+    <script src="/bower_components/d3/d3.js"></script>
+    <script src="/bower_components/Chart.js/Chart.js"></script>
+    <script src="/bower_components/angular-chart.js/dist/angular-chart.js"></script>
+    <script src="/bower_components/proj4/dist/proj4.js"></script>
+    <script src="/bower_components/Proj4Leaflet/src/proj4leaflet.js"></script>
+    <!-- endbower -->
+    <!-- inject:components:js -->
+    <script src="/components/canvas-toBlob/canvas-toBlob.js"></script>
+    <script src="/components/leaflet-image/leaflet-image.js"></script>
+    <script src="/components/turf/turf.js"></script>
+    <!-- endinject -->
+    <!-- endbuild -->
+
+    <!-- change path bellow, for 'build' if using a sub-directory of the host -->
+    <!-- build:js js/app.js -->
+    <!-- inject:js -->
+    <script src="/src/client/app/scaApp.module.js"></script>
+    <script src="/src/client/app/analyzer/analyzer.module.js"></script>
+    <script src="/src/client/app/blocks/exception/exception.module.js"></script>
+    <script src="/src/client/app/blocks/logger/logger.module.js"></script>
+    <script src="/src/client/app/blocks/phrase-normalizer/phrase-normalizer.module.js"></script>
+    <script src="/src/client/app/blocks/router/router.module.js"></script>
+    <script src="/src/client/app/core/core.module.js"></script>
+    <script src="/src/client/app/correlator/correlator.module.js"></script>
+    <script src="/src/client/app/dashboard/dashboard.module.js"></script>
+    <script src="/src/client/app/layout/layout.module.js"></script>
+    <script src="/src/client/app/report/report.module.js"></script>
+    <script src="/src/client/app/widgets/widgets.module.js"></script>
+    <script src="/src/client/app/analyzer/analysis-bar/analysis-bar.directive.js"></script>
+    <script src="/src/client/app/analyzer/analyzer.controller.js"></script>
+    <script src="/src/client/app/analyzer/analyzer.route.js"></script>
+    <script src="/src/client/app/analyzer/areas/areas-analyzer.controller.js"></script>
+    <script src="/src/client/app/analyzer/areas/areas-analyzer.route.js"></script>
+    <script src="/src/client/app/analyzer/filters/bounds-modal.controller.js"></script>
+    <script src="/src/client/app/analyzer/filters/filter-configuration-modal.controller.js"></script>
+    <script src="/src/client/app/analyzer/filters/filters.service.js"></script>
+    <script src="/src/client/app/analyzer/filters/sca-filter.directive.js"></script>
+    <script src="/src/client/app/analyzer/geometry-helper.service.js"></script>
+    <script src="/src/client/app/analyzer/hexbin.service.js"></script>
+    <script src="/src/client/app/analyzer/multiple-areas/multiple-areas-analyzer.controller.js"></script>
+    <script src="/src/client/app/analyzer/multiple-areas/multiple-areas-analyzer.route.js"></script>
+    <script src="/src/client/app/analyzer/points/points-analyzer.controller.js"></script>
+    <script src="/src/client/app/analyzer/points/points-analyzer.route.js"></script>
+    <script src="/src/client/app/analyzer/questionnaire/questionnaire-analyzer.controller.js"></script>
+    <script src="/src/client/app/analyzer/questionnaire/questionnaire-analyzer.route.js"></script>
+    <script src="/src/client/app/analyzer/survey-information/survey-information-analyzer.controller.js"></script>
+    <script src="/src/client/app/analyzer/survey-information/survey-information-analyzer.route.js"></script>
+    <script src="/src/client/app/blocks/exception/exception-handler.provider.js"></script>
+    <script src="/src/client/app/blocks/exception/exception.js"></script>
+    <script src="/src/client/app/blocks/logger/logger.js"></script>
+    <script src="/src/client/app/blocks/phrase-normalizer/phrase-normalizer.js"></script>
+    <script src="/src/client/app/blocks/router/router-helper.provider.js"></script>
+    <script src="/src/client/app/core/analysis.service.js"></script>
+    <script src="/src/client/app/core/config.js"></script>
+    <script src="/src/client/app/core/constants.js"></script>
+    <script src="/src/client/app/core/core.route.js"></script>
+    <script src="/src/client/app/core/report.service.js"></script>
+    <script src="/src/client/app/core/statistics.service.js"></script>
+    <script src="/src/client/app/core/survey-data.service.js"></script>
+    <script src="/src/client/app/core/survey-previewer.service.js"></script>
+    <script src="/src/client/app/correlator/correlator.controller.js"></script>
+    <script src="/src/client/app/correlator/correlator.route.js"></script>
+    <script src="/src/client/app/dashboard/dashboard.controller.js"></script>
+    <script src="/src/client/app/dashboard/dashboard.route.js"></script>
+    <script src="/src/client/app/layout/shell.controller.js"></script>
+    <script src="/src/client/app/report/report.controller.js"></script>
+    <script src="/src/client/app/report/report.route.js"></script>
+    <script src="/src/client/app/widgets/sca-download-name.directive.js"></script>
+    <script src="/src/client/app/widgets/sca-phase-thumbnail.directive.js"></script>
+    <script src="/src/client/app/widgets/thumbnail-modal.controller.js"></script>
+    <!-- endinject -->
+
+    <!-- inject:templates:js -->
+    <!-- endinject -->
+    <!-- endbuild -->
+</body>
+
+</html>

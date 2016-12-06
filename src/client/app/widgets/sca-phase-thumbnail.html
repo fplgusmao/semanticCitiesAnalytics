@@ -1,0 +1,42 @@
+<!--<div class='phase-thumbnail' ng-class="{'ineligible': !vm.phaseEligibility}">-->
+<div class='phase-thumbnail'>
+    <div class="phase-summary-container">
+        <h4 class="subtitle">Phase number {{vm.phaseNumber}}</h4>
+
+        <!-- if the phase has a title -->
+        <h4 ng-show='vm.phaseTitle' class="title">{{'"' + vm.phaseTitle + '"'}}</h4>
+        <!-- else -->
+        <h4 ng-hide='vm.phaseTitle' class="title">(Untitled)</h4>
+        <hr>
+        <div class="description">
+            <ng-transclude ng-cloak></ng-transclude>
+            <p class='warning-text'
+               ng-hide='vm.phaseEligibility'>
+                Results of this phase are not compatible with the selected for analysis
+            </p>
+            <hr>
+            <p ng-hide='vm.phaseStats'>Loading statistics...</p>
+            <p ng-if='vm.phaseStats'
+               ng-repeat='stat in vm.phaseStats'>
+                <span class="phase-stat-description">{{stat.description}}</span>{{' ' + stat.value}}
+            </p>
+        </div>
+    </div>
+
+    <div class="preview-buttons-container">
+        <button class="btn btn-default btn-block thumbnail-button left-button"
+                ng-click="vm.toogleAnalysisForThisPhase()"
+                ng-class="{'btn-info active' : vm.phaseAdded}"
+                ng-disabled="!vm.phaseEligibility">
+            {{vm.phaseAdded ? 'Added' : 'Add for analysis'}}
+        </button>
+        <button class="btn btn-default thumbnail-button right-button" ng-click="vm.showPhaseInfo()">
+            <i class="fa fa-info" aria-hidden="true"></i>
+        </button>
+<!--
+        <button class="btn btn-default thumbnail-button right-button" ng-click="vm.showPhaseStats()">
+            <i class="fa fa-bar-chart" aria-hidden="true"></i>
+        </button>
+-->
+    </div>
+</div>

@@ -1,0 +1,54 @@
+@import "scaApp-properties.less";
+
+@correlator-width : 75%;
+@correlator-spacing : (100% - @report-width) / 2.0;
+@correlator-padding : 5%;
+
+.correlator-container {
+    position: absolute;
+
+    height: 100%;
+    top: 0;
+    width: 100%;
+    padding: 3% @correlator-spacing;
+
+    overflow-y: auto;
+    background-color: @sca-grey-color;
+
+    .correlator-section-container {
+        position: relative;
+        display: block;
+        overflow-y: auto;
+
+        //max-height: 70%;
+        //min-height: 25%;
+        width: 100%;
+
+        margin-bottom: 30px;
+        background-color: @sca-light-color;
+        padding: 20px;
+        box-shadow:0 2px 5px 2px @sca-shadow-color;
+        border-radius: 2px;
+    }
+
+    .correlator-configuration-section {
+        .correlator-section-container;
+    }
+
+    .correlator-results-section {
+        .correlator-section-container;
+    }
+
+    .correlator-actions-section {
+        position: relative;
+        margin-top: 30px;
+
+        .btn-group {
+            margin-right: 15px;
+        }
+    }
+
+    .extra-v-space {
+        margin-top: 60px;
+    }
+}

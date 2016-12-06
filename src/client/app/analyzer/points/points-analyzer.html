@@ -1,0 +1,116 @@
+<div class="results-screen">
+    <div ng-hide="vm.loaded">
+        <div class="info">
+            <p class="info-text">Loading the results may take a while. Press the button bellow when appropriate for you.</p>
+
+            <button class="btn btn-block btn-primary loading-button"
+                    ng-click="vm.loadResults()">{{vm.loading ? 'Loading' : 'Load Results'}}</button>
+        </div>
+        <div ng-show="vm.loading">
+            <h4>Loading results</h4>
+            <small>{{vm.loadingState}}</small>
+        </div>
+    </div>
+    <div ng-show="vm.loaded" id="map"></div>
+</div>
+
+<analysis-bar>
+    <div class="analysis-action">
+        <h5>Save map snapshot</h5>
+        <button class="btn btn-default"
+                ng-class="{disabled : !vm.loaded}"
+                ng-click="vm.saveSnapshot()"><i class="fa fa-camera" aria-hidden="true"></i> Capture</button>
+    </div>
+    <div class="analysis-action after-first">
+        <h5>Change results display mode</h5>
+        <button class="btn btn-default"
+                ng-class="{'active btn-info' : vm.onHexbinMode()}"
+                ng-click="vm.toggleResultsMode()">Hex-Binning</button>
+        <button class="btn btn-default"
+                ng-class="{'active btn-info' : vm.onMarkersMode()}"
+                ng-click="vm.toggleResultsMode()">Markers</button>
+    </div>
+
+    <div class="analysis-action after-first" ng-show="vm.onHexbinMode()">
+        <h5>Hexagon radius <small> (absolute radius in Km)</small></h5>
+        <div class="form-inline">
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Radius (Km)</span>
+                    <input type="number" class="form-control" placeholder="Radius in Km" min="0.1" ng-model="vm.hexSize">
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-default"
+                ng-click="vm.changeHexSize()">Apply</button> <span class="text-danger" ng-hide="vm.hexSizeValid">Invalid value</span>
+    </div>
+
+    <div class="analysis-action after-first">
+        <h5>Include guiding features</h5>
+        <div class="form-inline">
+            <textarea class="form-control" rows="2"
+                      placeholder="GeoJson Feature Collection"
+                      ng-model="vm.guidingLayerGeoJson"></textarea>
+        </div>
+        <button class="btn btn-default"
+                ng-click="vm.loadGuidingLayer()">Add to map</button> <span class="text-danger" ng-hide="vm.guidingLayerJsonValid">Invalid Feature Collection</span>
+    </div>
+
+    <div class="analysis-action after-first" ng-show="vm.onHexbinMode()">
+        <h5>Hexagons' value floor and ceiling <small> (in percentage)</small></h5>
+        <div class="form-inline">
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Floor</span>
+                    <input type="number" class="form-control" placeholder="0" min="0" max="100" ng-model="vm.valueFloor">
+                    <span class="input-group-addon">%</span>
+                </div>
+            </div>
+            <div class="form-group after-first">
+                <div class="input-group">
+                    <span class="input-group-addon">Ceil</span>
+                    <input type="Number" class="form-control" placeholder="100" min="0" max="100" ng-model="vm.valueCeil">
+                    <span class="input-group-addon">%</span>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn btn-default"
+                ng-click="vm.changeHexValueRange()">Apply</button> <span class="text-danger" ng-hide="vm.valueRangeValid">Invalid value</span>
+    </div>
+
+    <div class="analysis-action after-first" ng-show="vm.onHexbinMode()">
+        <h5>Number of steps in scale</h5>
+        <div class="form-inline">
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="number" class="form-control" placeholder="2" min="2" max="20"
+                           ng-model="vm.colorScaleSteps">
+                    <span class="input-group-addon">steps</span>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-default"
+                ng-click="vm.changeColorScaleSteps()">Apply</button> <span class="text-danger" ng-hide="vm.colorScaleStepsValid">Invalid value</span>
+    </div>
+
+    <div class="analysis-action after-first" ng-show="vm.onHexbinMode()">
+        <h5>Hexagon color range <small>(in hexadecimal RGB)</small></h5>
+        <div class="form-inline">
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Floor color</span>
+                    <input type="text" class="form-control" placeholder="FFFFFF" ng-model="vm.floorColor">
+                </div>
+            </div>
+            <div class="form-group after-first">
+                <div class="input-group">
+                    <span class="input-group-addon">Ceil color</span>
+                    <input type="text" class="form-control" placeholder="000000" ng-model="vm.ceilColor">
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-default"
+                ng-click="vm.changeColorRange()">Apply</button> <span class="text-danger" ng-hide="vm.colorRangeValid">Invalid value</span>
+    </div>
+</analysis-bar>

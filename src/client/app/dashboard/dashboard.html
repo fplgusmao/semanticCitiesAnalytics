@@ -1,0 +1,41 @@
+<!-- nav bar no topo?-->
+
+<div class="dashboard">
+    <div class="header">
+        <h2 class="section-title">Select one, or more, phases to analyze</h2>
+    </div>
+    <div class="phase-selector">
+        <div class='thumbnail-container'
+             ng-if='vm.dataLoaded()'
+             ng-repeat='phase in vm.surveyPhases track by $index'>
+            <sca-phase-thumbnail phase-number='$index'
+                                 phase-title='phase.title'
+                                 phase-eligibility='vm.isEligibleForAnalysis($index)'
+                                 toogle-analysis='vm.toogleAnalysis'
+                                 phase-added='vm.isUnderAnalysis($index)'>
+                <p><strong>Type:</strong> {{vm.getReadablePhaseType(phase.type)}}</p>
+                <p ng-show="phase.comment"><strong>Summary:</strong> {{phase.comment}}</p>
+            </sca-phase-thumbnail>
+        </div>
+        <div class="loading-container"
+             ng-if="!vm.dataLoaded()">
+            Loading data and results...
+        </div>
+    </div>
+    <div class="footer">
+        <button class="btn btn-primary pull-right"
+                ng-disabled="vm.noPhasesToAnalyze()"
+                ng-click="vm.loadAnalysis()">Analyze Selected</button>
+        <button class="btn btn-default pull-right"
+                ng-disabled="vm.noPhasesToAnalyze()"
+                ng-click="vm.clearPhasesToAnalyze()">Clear Selection</button>
+    </div>
+</div>
+
+<!--
+<div>
+    link para relatório global
+    link para relatório final
+    configurações, tipo definir área de interesse no mapa (?)
+</div>
+-->

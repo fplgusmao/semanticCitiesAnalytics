@@ -1,0 +1,12 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{vm.title}}</h3>
+</div>
+<div class="modal-body stats-modal">
+    <p ng-repeat="stat in vm.data.stats">
+        <span class="description">{{stat.description}}</span>{{typeof(stat.value) === 'undefined' ? "" : ": " + stat.value}}
+    </p>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default btn-block"
+            type="button" ng-click="vm.close()">Close</button>
+</div>

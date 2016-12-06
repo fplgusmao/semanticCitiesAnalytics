@@ -1,0 +1,90 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{vm.filterTitle}}</h3>
+</div>
+<div class="modal-body filter-modal">
+<!--    filter summary-->
+    <p class="description">
+        About this filter: {{vm.filterDescription}}.
+    </p>
+    <p class="description">
+        Meant for phases of type {{vm.readable(vm.phaseTypeForThisFilter, true, true)}} <ng-show ng-show="vm.answerTypeForThisFilter">{{" "}}and questions of type {{vm.readable(vm.answerTypeForThisFilter, true, true)}}</ng-show>
+    </p>
+    <hr>
+    <p class="lead">Filter based on the results for this phase:</p>
+    <div class="scrollable-selection">
+        <form>
+            <div ng-repeat="phase in vm.surveyPhases">
+                <div ng-show="vm.isCompatibleWithThisPhase(phase.type)">
+                    <label>
+                        <input type="radio"
+                               name="selectedPhase"
+                               ng-model="vm.selectedPhase"
+                               ng-value="$index">
+                        Phase {{$index}} - {{vm.readable(phase.type, true, true)}} type
+                    </label>
+                    <span id="helpBlock" class="help-block" ng-if="phase.comment">{{(phase.title || 'Untitled') + ' - ' + phase.comment}}</span>
+                    <span id="helpBlock" class="help-block" ng-if="!phase.comment">{{phase.title || 'Untitled'}}</span>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div ng-if="vm.answerTypeForThisFilter && vm.selectedPhase >= 0">
+        <hr>
+        <p class="lead">And based on the answers to this question:</p>
+        <div class="scrollable-selection">
+            <form>
+                <div ng-repeat="q in vm.surveyPhases[vm.selectedPhase].questions">
+                    <div ng-show="vm.isCompatibleWithThisQuestion(q.answer.typeOfAnswer)">
+                        <label>
+                            <input type="radio"
+                                   name="selectedQuestion"
+                                   ng-model="vm.selectedQuestion"
+                                   ng-value="$index">
+                            Question {{$index}} - {{vm.readable(q.answer.typeOfAnswer, true, true)}} type
+                        </label>
+                        <span id="helpBlock" class="help-block"
+                              ng-if="q.questionBody">{{'"' + q.questionBody + '"'}}</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div ng-if="vm.filterGroups.length > 1">
+        <hr>
+        <p class="lead">Add filter to group:</p>
+        <label class="radio-inline" ng-repeat="group in vm.filterGroups">
+            <input type="radio" name="chosenGroup"
+                   ng-model="vm.selectedGroup"
+                   ng-value="$index"> {{$index}}
+        </label>
+    </div>
+
+    <!--    TODO: suport filters based on sub-phases-->
+    <!--
+    <div ng-if="vm.targetAreaForThisFilter && vm.selectedPhase >= 0">
+        <hr>
+        <p class="lead">And based on the results to this sub-phase:</p>
+        <div class="scrollable-selection">
+            <form>
+                <div ng-repeat="area in vm.surveyPhases[vm.selectedPhase].subPhases">
+                    <div>
+                        <label>
+                            <input type="radio"
+                                   name="selectedArea"
+                                   ng-model="vm.selectedArea"
+                                   ng-value="$index">
+                            Area number {{area.areaNumber}} - {{area.name}}
+                        </label>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    -->
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default"
+            type="button" ng-click="vm.cancel()">Cancel</button>
+    <button class="btn btn-primary" ng-disabled="!vm.canConfirm()"
+            type="button" ng-click="vm.confirm()">Confirm</button>
+</div>

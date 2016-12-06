@@ -1,0 +1,30 @@
+<div class="modal-header">
+    <h3 class="modal-title">Select bounds for filter</h3>
+    <p>Drag and zoom the map until it fits the desired boundaries.</p>
+</div>
+
+<div class="modal-body bounds-modal">
+    <div id="bounds-map"></div>
+    <p style="text-align:center;" ng-hide="vm.mapLoaded">Loading map...</p>
+</div>
+
+<div class="modal-footer">
+<!--
+    <button class="btn btn-default pull-left" type="button"
+            ng-class="{'btn-info active' : vm.isInDrawMode()}"
+            ng-click="vm.toggleDrawMode()">Draw Area</button>
+    <button class="btn btn-default pull-left" type="button"
+            ng-class="{'btn-info active' : vm.isInDeleteMode()}"
+            ng-click="vm.toggleDeleteMode()">Delete Area</button>
+-->
+<!--
+    <button class="btn btn-default pull-left" type="button"
+            ng-class="{'btn-success active' : vm.boundsSaved}"
+            ng-click="vm.saveMapBounds()">{{vm.saveBoundsLabel}}</button>
+-->
+
+    <button class="btn btn-default" type="button"
+            ng-click="vm.cancel()">Cancel</button>
+    <button class="btn btn-primary" type="button"
+            ng-click="vm.saveMapBounds()">Save and Exit</button>
+</div>

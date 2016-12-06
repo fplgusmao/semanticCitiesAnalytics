@@ -1,0 +1,111 @@
+<div class="correlator-container">
+    <div class="correlator-configuration-section">
+        <h3>Find correlations between drawn areas and placed points</h3>
+        <p class="lead">"{{vm.label}}" (in regard to results on {{vm.phases.length > 1 ? 'phases:' : 'phase'}}{{' ' + vm.phases.join(', ')}}{{vm.areaName ? ', area "' + vm.areaName + '"' : ''}})</p>
+
+        <div ng-repeat="measure in vm.measures">
+            <hr>
+
+            <div ng-if="vm.isAreaAgreement(measure)">
+                <h4>Find participants agreement towards a given area <small>later used as reference for correlations</small></h4>
+                <div class="form-group">
+                    <label>Name of the area</label>
+                    <input type="text" class="form-control" placeholder="Name" ng-model="vm.referenceAreaName">
+                </div>
+                <div class="form-group">
+                    <label>GeoJSON Polygon Feature for the area</label>
+                    <p class="help-block">NOTE: coordinate reference system should be EPSG:3857. If it isn't, please specify <a href="http://geojson.org/geojson-spec.html#named-crs">the CRS property</a> on the polygon's GeoJSON</p>
+                    <textarea class="form-control" rows="8"
+                              placeholder="GeoJson Polygon Feature"
+                              ng-model="measure.polygonAsString">
+                    </textarea>
+                </div>
+            </div>
+
+            <div ng-if="vm.isSinglePointDistance(measure)">
+                <h4>Calculate distance (in Km) between a participant's placed marker and his drawn area</h4>
+
+                <div class="form-group">
+                    <label>Phase from which to fetch the marker ("point a place" phase type)</label>
+                    <a ng-click="vm.removeMeasure($index)" class="pull-right">X</a>
+                    <select class="form-control"
+                            ng-options="phase.phaseNumber as phase.phaseName for phase in vm.pointAPlacePhases"
+                            ng-model="measure.targetPhase">
+                        <option value="" disabled selected
+                                style="display:none;">Select compatible phase</option>
+                    </select>
+                </div>
+            </div>
+
+            <div ng-if="vm.isClosestOfPointsDistance(measure)">
+                <h4>Calculate the distance (in Km) of the participant's closest marker from a set of placed markers to his drawn area</h4>
+
+                <div class="form-group">
+                    <label>Phase from which to fetch the markers ("point multiple places" phase type)</label>
+                    <a ng-click="vm.removeMeasure($index)" class="pull-right">X</a>
+                    <select class="form-control"
+                            ng-options="phase.phaseNumber as phase.phaseName for phase in vm.pointMultiplePlacesPhases"
+                            ng-model="measure.targetPhase">
+                        <option value="" disabled selected
+                                style="display:none;">Select compatible phase</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="correlator-actions-section" ng-class="{'extra-v-space' : vm.measures.length === 0}">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox"
+                           ng-model="vm.deleteIncompleteEntries"> Delete entries with 'undefined'
+                </label>
+            </div>
+
+            <div class="btn-group dropup">
+                <button type="button" class="btn btn-default dropdown-toggle"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Add measures <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+<!--
+                    <li><a ng-click="vm.createAreaAgreement()"
+                           href="#">Polygons agreement on area</a></li>
+                    <li role="separator" class="divider"></li>
+-->
+                    <li><a ng-click="vm.createSinglePointDistance()"
+                           href="#">Distance between point and area</a></li>
+                    <li><a ng-click="vm.createClosestOfPointsDistance()"
+                           href="#">Closest point to area</a></li>
+                </ul>
+            </div>
+            <button class="btn btn-primary"
+                    ng-click="vm.calculateMeasurements(vm.deleteIncompleteEntries)"
+                    ng-disabled="vm.measures.length === 0">
+                Calculate measurements
+            </button>
+
+            <a class="btn btn-primary pull-right" role="button"
+               sca-download-name="'correlations - ' + vm.referenceAreaName" sca-download-type="csv"
+               ng-disabled="!vm.measurementsAsString() || vm.measurementsAsString().length <= 0 || angular.isUndefined(vm.linkToCSV)"
+               ng-href="{{vm.linkToCSV}}" download="correlations.csv" target="_blank">
+                <i class="fa fa-download" aria-hidden="true"></i> Download measurements (in .csv)
+            </a>
+        </div>
+    </div>
+
+
+    <div class="correlator-results-section"
+         ng-show="vm.measurementsAsString() && vm.measurementsAsString().length > 0">
+        <a ng-click="vm.toggleMeasurementsVisibility()">
+            <span ng-show="!vm.measurementsPreview"><i class="fa fa-angle-down" aria-hidden="true"></i> Preview measurements</span>
+            <span ng-show="vm.measurementsPreview"><i class="fa fa-angle-up" aria-hidden="true"></i> Hide measurements</span>
+        </a>
+        <ul class="list-unstyled" ng-if="vm.measurementsPreview">
+            <li ng-repeat="measurement in vm.measurementsAsString() track by $index">
+                {{measurement}}
+            </li>
+        </ul>
+<!--        <p ng-bind-html="vm.measurementsAsString()"></p>-->
+    </div>
+</div>

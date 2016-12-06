@@ -1,0 +1,103 @@
+<div class="filter">
+<!--    <h4 class="filter-name">{{vm.filterConfig.name}}</h4>-->
+    <label class="filter-prompt">Filter based on<ng-show ng-show="vm.targetQuestionNumber >= 0">{{" "}}question {{vm.targetQuestionNumber}} of</ng-show>{{" "}}phase {{vm.targetPhaseNumber}}, and where participants {{vm.filterConfig.prompt}}</label>
+    <form>
+        <div class="filter-content">
+            <!-- for each filter parameter -->
+            <div ng-repeat="param in vm.filterConfig.parameters"
+                 ng-init="paramIndex = $index"
+                 class="filter-param">
+
+                <!-- if number parameter -->
+                <div ng-if="param.type === 'number'" class="form-group">
+                    <div class="input-group number-param">
+                        <span class="input-group-addon">{{param.prompt}}</span>
+                        <input type="number" class="form-control"
+                               ng-model="vm.parametersValues[paramIndex]">
+                    </div>
+                </div>
+
+                <!-- if radio-button parameter -->
+                <div ng-if="param.type === 'radio'" class="form-group">
+                    <label ng-if="param.prompt">{{param.prompt}}</label>
+                    <div ng-repeat="option in vm.dataForParameters[paramIndex]"
+                         class="radio">
+                        <label>
+                            <input type="radio"
+                                   ng-name="$parent.$index"
+                                   ng-model="vm.parametersValues[paramIndex]"
+                                   ng-value="$index">
+                            {{param.supportProperty ? option[param.supportProperty] : option}}
+                        </label>
+                    </div>
+                </div>
+
+                <!-- if checkbox parameter -->
+                <div ng-if="param.type === 'checkbox'" class="form-group">
+                    <label ng-if="param.prompt">{{param.prompt}}</label>
+                    <div ng-repeat="option in vm.dataForParameters[paramIndex]"
+                         ng-init="vm.parametersValues[paramIndex] = []"
+                         class="checkbox">
+                        <label>
+                            <input type="checkbox"
+                                   ng-name="paramIndex"
+                                   ng-model="vm.parametersValues[paramIndex][$index]">
+                            {{param.supportProperty ? option[param.supportProperty] : option}}
+                        </label>
+                    </div>
+                </div>
+
+                <!-- if dropdown-select parameter -->
+                <div ng-if="param.type === 'select'" class="form-inline">
+                    <label ng-if="param.prompt">{{param.prompt}}</label>
+                    <select ng-hide="param.supportProperty"
+                            class="form-control"
+                            ng-model="vm.parametersValues[paramIndex]"
+                            ng-options="option for option in vm.dataForParameters[paramIndex]">
+                        <option value=''
+                                disabled selected style='display:none;'>Select option</option>
+                    </select>
+                    <select ng-show="param.supportProperty"
+                            class="form-control"
+                            ng-model="vm.parametersValues[paramIndex]"
+                            ng-options="option[param.supportProperty] as option[param.supportProperty] for option in vm.dataForParameters[paramIndex]">
+                        <option value=''
+                                disabled selected
+                                style='display:none;'>Select option</option>
+                    </select>
+                </div>
+
+                <!-- if bounds parameter -->
+                <div ng-if="param.type === 'bounds'" class="form-inline">
+                    <div class="input-group">
+                        <input type="text" class="form-control"
+                               placeholder="Bounds vertices"
+                               ng-model="vm.parametersValues[paramIndex]">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default"
+                                    ng-click="vm.openBoundsModal(paramIndex,vm.dataForParameters[paramIndex])">
+                                Select Bounds
+                            </button>
+                        </span>
+                    </div>
+<!--
+                    <div class="form-group">
+                        <label ng-if="param.prompt">{{param.prompt}}</label>
+                        <input class="form-control" type="text"
+                               ng-model="vm.parametersValues[paramIndex]"
+                               placeholder="Bounds vertices' coordinates">
+                    </div>
+                    <button class="btn btn-default"
+                            ng-click="vm.openBoundsModal(paramIndex,vm.dataForParameters[paramIndex])">
+                        Select Bounds
+                    </button>
+-->
+                </div>
+            </div>
+        </div>
+<!--        <label class="filter-prompt">For<ng-show ng-show="vm.targetQuestionNumber >= 0">{{" "}}question {{vm.targetQuestionNumber}} of</ng-show>{{" "}}phase {{vm.targetPhaseNumber}}</label>-->
+    </form>
+    <div class="filter-actions"
+         ng-transclude="actions" ng-cloak>
+    </div>
+</div>

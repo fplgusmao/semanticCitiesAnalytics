@@ -1,0 +1,88 @@
+@import "scaApp-properties.less";
+
+@thumbnail-content-spacing: 5%;
+@phase-summary-height : 80%;
+@number-of-button-rows : 1;
+@button-row-height : (100% - @phase-summary-height) / @number-of-button-rows;
+@analyze-button-container-height : (100% - @phase-summary-height)/2.0;
+@preview-buttons-container-height : @analyze-button-container-height;
+
+.phase-thumbnail {
+    position: relative;
+    height: 100%;
+
+    border-radius: 3px;
+    background-color: @sca-light-color;
+    box-shadow: 0px 4px 10px 4px @sca-shadow-color;
+
+    .phase-summary-container {
+        position: absolute;
+        top: 0; //relative to container
+        left: 0;
+        height: @phase-summary-height;
+        width: 100%;
+
+        padding: @thumbnail-content-spacing;
+
+        overflow-y: auto;
+
+        box-shadow: inset 0px -15px 10px -15px rgba(0, 0, 0, 0.2);
+
+        .phase-stat-description {
+            font-weight: @bold-text;
+        }
+    }
+
+    .preview-buttons-container {
+        @button-container-width : 80%; //relative to thumbnail
+        //@button-width : 45%; //relative to container
+        @button-height : 70%; //relative to container
+
+        position: absolute;
+        width: @button-container-width;
+        height: @button-row-height;
+
+        top: @phase-summary-height;
+        left: (100% - @button-container-width) / 2.0;
+
+        .thumbnail-button {
+            position: absolute;
+            top: (100% - @button-height) / 2.0;
+            height: @button-height;
+
+            &.left-button { //analyze button
+                width: 70%;
+                left : 0;
+            }
+
+            &.right-button { //info button
+                width: 25%;
+                right: 0;
+            }
+        }
+    }
+
+    .title {
+        font-size: @big-text;
+        font-weight: @bold-text;
+
+        text-align: center;
+    }
+
+    .subtitle {
+        font-size: @medium-text;
+
+        text-align: center;
+    }
+
+    .description {
+        font-size: @small-text;
+        font-weight: @light-text;
+    }
+
+    .warning-text {
+        color: @color_warning;
+        font-size: @small-text;
+        font-weight: @bold-text;
+    }
+}

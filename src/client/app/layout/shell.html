@@ -1,0 +1,38 @@
+<div ng-controller="ShellController as vm" class="app-container">
+    <div class="navbar-container">
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header" ng-hide="vm.isOnSeparateScreen()">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" ui-sref="dashboard">Semantic Cities Analytics</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav" ng-hide="vm.isOnSeparateScreen()">
+                        <li ng-repeat="i in vm.appNavSections" ng-class="vm.getMenuStatus(i)">
+                            <a ui-sref="{{i.name}}">{{i.title}}</a>
+                        </li>
+                    </ul>
+
+                    <ul class="nav navbar-nav" ng-show="vm.isOnAnalyzer()">
+                        <li>
+                            <a ui-sref="dashboard">&lt; Back</a>
+                        </li>
+                    </ul>
+
+                    <ul class="nav navbar-nav" ng-show="vm.isOnCorrelator()">
+                        <li>
+                            <a ui-sref="report">&lt; Back</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <ui-view class="state-container"></ui-view>
+</div>
