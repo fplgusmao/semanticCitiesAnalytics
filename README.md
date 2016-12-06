@@ -32,3 +32,5 @@ The whole process of deploying this web-app consists of:
     - Upload the whole `src/client/app/data` directory; in the host the path should be, for our example, `analytics/data`
 
 This project's code structure follows the [Hottowel SPA Template](https://github.com/johnpapa/generator-hottowel) for Angular.JS. The most relevant technologies are [Leaflet.JS](http://leafletjs.com/), for map manipulation, and [Turf.JS](http://turfjs.org/), for most of the spatial analysis needed.
+
+This web-app is meant for **desktop only**, since it is a too complex interface and interaction for mobile devices.
