@@ -2,11 +2,19 @@
 # https://docs.npmjs.com/misc/faq#should-i-check-my-node-modules-folder-into-git
 node_modules/
 bower_components/
+
+# Built stuff that doesn't matter
 report/
 build/
 
+# OS generated files #
+######################
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db
+
+#packages
+
 # other
 .tmp
-
-src/client/app/db/db-config.php
-.DS_Store
