@@ -19,17 +19,14 @@
         var DEFAULT_N_COLOR_LEVELS = 4;
 
         var tilesForHexbin = {
-            tilesUrl : 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}' +
-            '.png?access_token={accessToken}',
-            tilesAttributes: {
-                attribution : 'Map data &copy; <a href="http://' +
-                'openstreetmap.org">OpenStreetMap</a>' +
-                'contributors, <a href="http://creativecommons.org/licenses' +
-                '/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://' +
-                'mapbox.com">Mapbox</a>',
-                id : 'fplgusmao.pia8kehj',
-                accessToken : 'pk.eyJ1IjoiZnBsZ3VzbWFvIiwiYSI6IlNONWp0LUkifQ' +
-                '.XYa-yuNprw_yxm_2E9jYCw'
+            'tilesUrl': 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+            'tilesAttributes': {
+                'attribution': '&copy; <a href=\'http://osm.org/copyright\'>' +
+                    'OpenStreetMap</a> contributors',
+                'maxZoom': 18,
+                'minZoom': 10
+                //id : 'myId.ifNeeded',
+                //accessToken : 'accessToken4MapAPI.ifNeeded'
             }
         };
 
